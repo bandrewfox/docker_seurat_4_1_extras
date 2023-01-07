@@ -17,14 +17,6 @@ ENV CRAN=https://cran.microsoft.com/snapshot/${MRAN_BUILD_DATE}
 RUN /rocker_scripts/install_pandoc.sh
 RUN /rocker_scripts/install_tidyverse.sh
 
-# uncomment if you want rstudio:
-# If there is a wget download error, then go to this page and make sure the RSTUDIO_VERSION you specify above is valid: https://dailies.rstudio.com/version/2022.02.0+443.pro2/
-#ENV RSTUDIO_VERSION=2022.02.0-443
-#ENV DEFAULT_USER=rstudio
-#ENV PATH=/usr/lib/rstudio-server/bin:$PATH
-#RUN /rocker_scripts/install_rstudio.sh
-#EXPOSE 8787
-
 # nlopt needed for ggpubr
 RUN apt update && apt install -y libnlopt-dev
 
@@ -44,5 +36,8 @@ RUN Rscript --vanilla /tmp/bioc_install.R GEOquery
 RUN Rscript --vanilla /tmp/bioc_install.R fgsea GSVA msigdb
 RUN Rscript --vanilla /tmp/bioc_install.R ComplexHeatmap
 
-CMD ["/init"]
+CMD ["R"]
+
+# to run this:
+# docker run --rm -v /home/ec2-user:/home/ec2-user -e USERID=$UID -it ghcr.io/bandrewfox/docker_seurat_4_1_extras:main
 
