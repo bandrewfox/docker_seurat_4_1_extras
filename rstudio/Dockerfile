@@ -8,6 +8,10 @@ ENV PATH=/usr/lib/rstudio-server/bin:$PATH
 RUN /rocker_scripts/install_rstudio.sh
 EXPOSE 8787
 
+RUN pip install 'scanpy[leiden]'
+RUN pip install numpy==1.21
+RUN pip install decoupler==1.3.3
+
 CMD ["/init"]
 
 # to build:
